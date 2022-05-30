@@ -16,7 +16,7 @@ const bool jsonhl::Deserializer::____MgetArray(jsonhl::Value &actualNode, std::s
         return false;
     if (std::isdigit(*it) == false)
         throw std::runtime_error("Digit array getter is wrongly formatted");
-    indexArray = std::stoi(it.base());
+    indexArray = std::stoi(std::string(&(*it)));
     for (; *it; it++)
     {
         if (*it == ']')
@@ -34,6 +34,7 @@ const bool jsonhl::Deserializer::____MgetArray(jsonhl::Value &actualNode, std::s
 const bool jsonhl::Deserializer::____MgetObject(jsonhl::Value &actualNode, std::string::iterator &it) const
 {
     std::string::iterator endObject = it;
+    std::string result;
 
     if (actualNode.getType() != jsonhl::Value::ValueType::OBJECT)
         return false;
@@ -42,7 +43,9 @@ const bool jsonhl::Deserializer::____MgetObject(jsonhl::Value &actualNode, std::
         throw std::runtime_error("Object name is null");
     for (; *endObject && *endObject != '.' && *endObject != '['; endObject++)
         ;
-    actualNode = *actualNode.getObject().at(std::string(it.base(), endObject.base() - it.base()));
+    for (; it != endObject; it++)
+        result += *it;
+    actualNode = *actualNode.getObject().at(result);
     it = endObject;
     return true;
 }
