@@ -7,6 +7,7 @@
  */
 #pragma once
 
+#include <string>
 #include <cinttypes>
 #include <memory>
 #include <ostream>
