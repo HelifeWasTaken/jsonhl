@@ -10,7 +10,7 @@
 const bool jsonhl::Deserializer::____MgetArray(jsonhl::Value &actualNode, std::string::iterator &it) const
 {
     std::size_t i = 0;
-    double indexArray = 0;
+    std::size_t indexArray = 0;
 
     if (actualNode.getType() != jsonhl::Value::ARRAY)
         return false;
